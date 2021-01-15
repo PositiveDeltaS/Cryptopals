@@ -52,14 +52,26 @@ def single_character_xor():
                     continue
                 else:
                     print(d) 
+    f.close()
     return
 
+#takes string as arg, make sure you put it in quotes
+def repeating_key_xor(hex_input):
+    key = "ICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICEICE"
+    
+    key_bytes = bytes(key, 'utf-8')
+    byte_string = bytes(hex_input, 'utf-8')
+    bytes_output = bytes((a ^ b) for a,b in zip(key_bytes, byte_string))
+    output = binascii.hexlify(bytes_output)
+    print(output) 
+    
+    return
 
 def main():
     hex_input = arg1
     #print(single_byte_xor(hex_input))
-    single_character_xor()
-
+    #single_character_xor()
+    repeating_key_xor(hex_input)
 
 if __name__=='__main__':
     main()
