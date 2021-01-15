@@ -3,12 +3,12 @@ import base64
 from codecs import encode, decode
 import binascii
 
-if(3 > len(sys.argv)):
+if(2 > len(sys.argv)):
     print("too few args")
     exit()
 else:
     arg1 = sys.argv[1]
-    arg2 = sys.argv[2]
+   # arg2 = sys.argv[2]
 
 #Cryptopals chal 1: hex to b64
 def hex_to_b64(hex_input): 
@@ -33,11 +33,32 @@ def fixed_xor(hex_input, xor_against):
         print("string lengths do not match")
         return
 
+def single_byte_xor(hex_input):
+    byte_strings = binascii.unhexlify(hex_input)
+    strings = (''.join(chr(a^num) for num in byte_strings) for a in range(256)) #creates a generator object of xor'd strings
+    return max(strings, key=lambda s: s.count(' ')) #counting spaces for frequency
+
+def single_character_xor():
+    
+    result = []
+    f = open("4.txt")
+        
+    byte_strings = (binascii.unhexlify(line.strip()) for line in f.readlines())
+    strings = list(byte_strings)
+    for string in strings:
+        print(string)
+        xord_strings = (''.join(chr(a^num) for num in string) for a in range(256))
+        string_list = list(xord_strings)
+        for d in xord_strings:
+            if(d.isascii()) :
+                result.append(d)
+            
+    return result
+
 
 def main():
     hex_input = arg1
-    xor_against = arg2
-    print(fixed_xor(hex_input, xor_against))
+    print(single_character_xor())
 
 
 if __name__=='__main__':
