@@ -40,25 +40,25 @@ def single_byte_xor(hex_input):
 
 def single_character_xor():
     
-    result = []
     f = open("4.txt")
         
     byte_strings = (binascii.unhexlify(line.strip()) for line in f.readlines())
-    strings = list(byte_strings)
-    for string in strings:
-        print(string)
+    for string in byte_strings:
         xord_strings = (''.join(chr(a^num) for num in string) for a in range(256))
-        string_list = list(xord_strings)
         for d in xord_strings:
-            if(d.isascii()) :
-                result.append(d)
-            
-    return result
+            if(d.isascii()):
+                spec_char = "!@#$%^&*()~;[]{}`|:-+?_=,<>"
+                if any (c in spec_char for c in d):
+                    continue
+                else:
+                    print(d) 
+    return
 
 
 def main():
     hex_input = arg1
-    print(single_character_xor())
+    #print(single_byte_xor(hex_input))
+    single_character_xor()
 
 
 if __name__=='__main__':
