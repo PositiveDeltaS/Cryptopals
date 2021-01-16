@@ -8,7 +8,7 @@ if(2 > len(sys.argv)):
     exit()
 else:
     arg1 = sys.argv[1]
-   # arg2 = sys.argv[2]
+    arg2 = sys.argv[2]
 
 #Cryptopals chal 1: hex to b64
 def hex_to_b64(hex_input): 
@@ -67,11 +67,30 @@ def repeating_key_xor(hex_input):
     
     return
 
+def hamming_dist(a_str: bytes, b_str: bytes) -> int:
+
+    assert(len(a_str) == len(b_str))
+    dist = 0 
+    for b1,b2 in zip(a_str,b_str):
+        diff = b1^b2
+        dist += sum((1 for bit in bin(diff) if bit == '1'))
+
+    return dist
+
+def break_repeating_xor():
+    return 
+
 def main():
-    hex_input = arg1
+    #hex_input = arg1
     #print(single_byte_xor(hex_input))
     #single_character_xor()
-    repeating_key_xor(hex_input)
+    #repeating_key_xor(hex_input)
+    a = "this is a test"
+    b = "wokka wokka!!!"
+    a_byte = bytes(a, 'utf-8')
+    b_byte = bytes(b, 'utf-8')
+    print(hamming_dist(a_byte,b_byte))
+    #break_repeating_xor()
 
 if __name__=='__main__':
     main()
