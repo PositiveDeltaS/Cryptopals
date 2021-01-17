@@ -2,6 +2,7 @@ import sys
 import base64
 from codecs import encode, decode
 import binascii
+import itertools
 
 if(2 > len(sys.argv)):
     print("too few args")
@@ -13,7 +14,6 @@ else:
 #Cryptopals chal 1: hex to b64
 def hex_to_b64(hex_input): 
     hex_input_bytes = decode(hex_input, 'hex')
-    #base64_bytes = base64.b64encode(hex_input_bytes)
     base64_bytes = encode(hex_input_bytes, 'base64')
     output = base64_bytes.decode('ascii')
     return output
@@ -26,8 +26,7 @@ def fixed_xor(hex_input, xor_against):
         
         output_bytes = bytes((a ^ b) for a,b in zip(hex_input_bytes, xor_against_bytes))
         output = binascii.hexlify(output_bytes)
-        output2 = output.decode('utf8')
-        return output2
+        return output
 
     else :
         print("string lengths do not match")
@@ -68,7 +67,7 @@ def repeating_key_xor(hex_input):
     return
 
 def hamming_dist(a_str: bytes, b_str: bytes) -> int:
-
+#this function works, do not touch it
     assert(len(a_str) == len(b_str))
     dist = 0 
     for b1,b2 in zip(a_str,b_str):
@@ -78,6 +77,17 @@ def hamming_dist(a_str: bytes, b_str: bytes) -> int:
     return dist
 
 def break_repeating_xor():
+    f = open("6.txt")
+    
+    keysize = 2
+    byte_strings = (base64.b64decode(line.strip()) for line in f.readlines())
+    for string in byte_strings:
+        first = string
+        second = next(byte_strings) 
+        byte_strings.close()
+
+    print(hamming_dist(first, second))
+                
     return 
 
 def main():
@@ -85,12 +95,12 @@ def main():
     #print(single_byte_xor(hex_input))
     #single_character_xor()
     #repeating_key_xor(hex_input)
-    a = "this is a test"
-    b = "wokka wokka!!!"
-    a_byte = bytes(a, 'utf-8')
-    b_byte = bytes(b, 'utf-8')
-    print(hamming_dist(a_byte,b_byte))
-    #break_repeating_xor()
+    #a = "this is a test"
+    #b = "wokka wokka!!!"
+    #a_byte = bytes(a, 'utf-8')
+    #b_byte = bytes(b, 'utf-8')
+    #print(hamming_dist(a_byte,b_byte))
+    break_repeating_xor()
 
 if __name__=='__main__':
     main()
