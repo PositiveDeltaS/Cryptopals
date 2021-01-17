@@ -94,27 +94,28 @@ def break_repeating_xor(i, test):
     
     keysize = i
      
-    print(test)
     first = test[0:keysize]
     second = test[keysize:keysize*2]
 
-    print(first)
-    print(second)
     dist = hamming_dist(first, second)
     eq = dist/keysize
-    print(dist)
+
+    print(keysize)
     print(eq)
         
-    return 
+    return [eq, keysize]
 
 def main():
     #hex_input = arg1
     #print(single_byte_xor(hex_input))
     #single_character_xor()
     #repeating_key_xor(hex_input)
+    lst = []
     test_str = open_txt()
-    for i in range(2, 40):
-        break_repeating_xor(i, test_str)
+    for i in range(2, 41):
+        lst += break_repeating_xor(i, test_str)
+
+    print(min(lst))
 
 if __name__=='__main__':
     main()
