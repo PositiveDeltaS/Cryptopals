@@ -76,18 +76,35 @@ def hamming_dist(a_str: bytes, b_str: bytes) -> int:
 
     return dist
 
-def break_repeating_xor():
+def open_txt():
     f = open("6.txt")
-    
-    keysize = 2
+
     byte_strings = (base64.b64decode(line.strip()) for line in f.readlines())
     for string in byte_strings:
-        first = string
-        second = next(byte_strings) 
+        test = string
+        test2 = next(byte_strings) 
         byte_strings.close()
 
-    print(hamming_dist(first, second))
-                
+    test = test + test2
+    print(test)
+    f.close()
+    return test
+
+def break_repeating_xor(i, test):
+    
+    keysize = i
+     
+    print(test)
+    first = test[0:keysize]
+    second = test[keysize:keysize*2]
+
+    print(first)
+    print(second)
+    dist = hamming_dist(first, second)
+    eq = dist/keysize
+    print(dist)
+    print(eq)
+        
     return 
 
 def main():
@@ -95,12 +112,9 @@ def main():
     #print(single_byte_xor(hex_input))
     #single_character_xor()
     #repeating_key_xor(hex_input)
-    #a = "this is a test"
-    #b = "wokka wokka!!!"
-    #a_byte = bytes(a, 'utf-8')
-    #b_byte = bytes(b, 'utf-8')
-    #print(hamming_dist(a_byte,b_byte))
-    break_repeating_xor()
+    test_str = open_txt()
+    for i in range(2, 40):
+        break_repeating_xor(i, test_str)
 
 if __name__=='__main__':
     main()
