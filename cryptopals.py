@@ -92,13 +92,16 @@ def break_repeating_xor(i, test):
     
     f = open("byteslist1.txt", 'r')
     keysize = i
+    dist = []
     f1 = f.readlines() #this doesn't work inside the for statement 
     for line in f1:
-        #print(bytes(line, 'utf-8'))
-        first = f1[:keysize]
-        
-        print(first)
-        #second = test[keysize:keysize*2]
+        l1 = (bytes(line, 'utf-8'))
+        l1 = bytes(f1[:keysize], 'utf-8')
+        l2 = bytes(f1[keysize:(keysize*2)], 'utf-8')
+        dist += hamming_dist(l1, l2)
+       
+    #an error where hamming_dist wants bytes but the lines in f1 are strings. possibly want one big bytes object that I can feed into chunks into hamming_dist
+        print(dist)
     f.close()
     #dist = hamming_dist(first, second)
     #eq = dist/keysize
