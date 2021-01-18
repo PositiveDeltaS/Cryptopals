@@ -78,32 +78,35 @@ def hamming_dist(a_str: bytes, b_str: bytes) -> int:
 
 def open_txt():
     f = open("6.txt")
-
+    lst = []
     byte_strings = (base64.b64decode(line.strip()) for line in f.readlines())
-    for string in byte_strings:
-        test = string
-        test2 = next(byte_strings) 
-        byte_strings.close()
 
-    test = test + test2
-    print(test)
+    f1 = open("byteslist1.txt", 'wb')
+    for string in byte_strings:
+        f1.write(string)
+    f1.close()
     f.close()
-    return test
+    return
 
 def break_repeating_xor(i, test):
     
+    f = open("byteslist1.txt", 'r')
     keysize = i
-     
-    first = test[0:keysize]
-    second = test[keysize:keysize*2]
-
-    dist = hamming_dist(first, second)
-    eq = dist/keysize
-
-    print(keysize)
-    print(eq)
+    f1 = f.readlines() #this doesn't work inside the for statement 
+    for line in f1:
+        #print(bytes(line, 'utf-8'))
+        first = f1[:keysize]
         
-    return [eq, keysize]
+        print(first)
+        #second = test[keysize:keysize*2]
+    f.close()
+    #dist = hamming_dist(first, second)
+    #eq = dist/keysize
+    
+    print(keysize)
+    #print(eq)
+        
+    return #[eq, keysize]
 
 def main():
     #hex_input = arg1
@@ -111,11 +114,11 @@ def main():
     #single_character_xor()
     #repeating_key_xor(hex_input)
     lst = []
-    test_str = open_txt()
-    for i in range(2, 41):
-        lst += break_repeating_xor(i, test_str)
-
-    print(min(lst))
+    #test_str = open_txt()
+    #for i in range(2, 41):
+        #lst += break_repeating_xor(i, test_str)
+    break_repeating_xor(1, 'test')
+    #print(min(lst))
 
 if __name__=='__main__':
     main()
